@@ -14,7 +14,6 @@ export const RealTime = () => {
   }, []);
 
   const parseTime = (time) => {
-    console.log(time);
     if (time < 10) {
       return "0" + time;
     } else if (time >= 10) {
@@ -25,7 +24,7 @@ export const RealTime = () => {
   return (
     <Box>
       <Typography sx={{ fontSize: "4em" }}>
-        {parseTime(now.getHours())}: {parseTime(now.getMinutes())}:{" "}
+        {parseTime(now.getHours())}:{parseTime(now.getMinutes())}:
         {parseTime(now.getSeconds())}
       </Typography>
     </Box>
