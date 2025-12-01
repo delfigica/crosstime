@@ -1,0 +1,1 @@
+export const buttonStyle = {backgroundColor: '#212121', color: '#fff', fontWeight: '500' }
