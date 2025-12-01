@@ -4,6 +4,7 @@ import { buttonStyle } from "../styles";
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { BackHome } from "../components/BackHome";
 
 export default function Configuration() {
   const [modes, setModes] = useState([
@@ -183,11 +184,7 @@ export default function Configuration() {
 
   return (
     <Container sx={{ marginTop: "10px" }}>
-      <Link href={"/"}>
-        <Button variant="contained" sx={{ ...buttonStyle }}>
-          Back home
-        </Button>
-      </Link>
+      <BackHome />
       <Box sx={{ margin: "20px 0px" }}>
         <Typography sx={titleStyle}>Select mode</Typography>
         <hr />
