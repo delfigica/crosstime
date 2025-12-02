@@ -1,0 +1,12 @@
+1:"$Sreact.fragment"
+2:I[25984,["/crosstime/_next/static/chunks/f4d9a974a85073de.js","/crosstime/_next/static/chunks/7979ec3e55e0bbf5.js"],"default"]
+3:I[5530,["/crosstime/_next/static/chunks/f4d9a974a85073de.js","/crosstime/_next/static/chunks/7979ec3e55e0bbf5.js"],"default"]
+4:I[14766,["/crosstime/_next/static/chunks/f4d9a974a85073de.js","/crosstime/_next/static/chunks/7979ec3e55e0bbf5.js"],"default"]
+5:I[98700,["/crosstime/_next/static/chunks/f4d9a974a85073de.js","/crosstime/_next/static/chunks/7979ec3e55e0bbf5.js"],"RealTime"]
+6:I[93071,["/crosstime/_next/static/chunks/f4d9a974a85073de.js","/crosstime/_next/static/chunks/7979ec3e55e0bbf5.js"],""]
+7:I[47427,["/crosstime/_next/static/chunks/f4d9a974a85073de.js","/crosstime/_next/static/chunks/7979ec3e55e0bbf5.js"],"default"]
+8:I[34213,["/crosstime/_next/static/chunks/f4d9a974a85073de.js","/crosstime/_next/static/chunks/7979ec3e55e0bbf5.js"],"UsuallyWorks"]
+9:I[43613,["/crosstime/_next/static/chunks/8e6d3eb92593ee57.js","/crosstime/_next/static/chunks/d26199c62096235d.js"],"OutletBoundary"]
+a:"$Sreact.suspense"
+0:{"buildId":"drQ06e-uOSVeX_OnlYarF","rsc":["$","$1","c",{"children":[["$","$L2",null,{"children":[["$","$L3",null,{"sx":{"backgroundColor":"#DADDD3","width":"100%","height":"30vh","marginTop":"1em","borderRadius":"10px","display":"flex","alignItems":"center","justifyContent":"space-evenly","flexDirection":"column","padding":"1em"},"children":[["$","$L4",null,{"sx":{"fontSize":"1.5em"},"children":"CROSSTIME"}],["$","$L5",null,{}]]}],["$","$L6",null,{"href":"/timers/configuration","children":["$","$L7",null,{"variant":"contained","fullWidth":true,"sx":{"margin":"10px 0px","backgroundColor":"#0A0B06","color":"#EFF1EF","fontWeight":"600"},"children":"New clock"}]}],["$","$L8",null,{}]]}],[["$","script","script-0",{"src":"/crosstime/_next/static/chunks/f4d9a974a85073de.js","async":true}],["$","script","script-1",{"src":"/crosstime/_next/static/chunks/7979ec3e55e0bbf5.js","async":true}]],["$","$L9",null,{"children":["$","$a",null,{"name":"Next.MetadataOutlet","children":"$@b"}]}]]}],"loading":null,"isPartial":false}
+b:null
