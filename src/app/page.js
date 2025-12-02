@@ -1,9 +1,10 @@
-import { Box, Button, Container } from "@mui/material";
+import Link from "next/link";
 import { RealTime } from "./components/RealTime";
+import { UsuallyWorks } from "./components/UsuallyWorks";
 
 import "./globals.css";
 import { buttonStyle } from "./styles";
-import Link from "next/link";
+import { Box, Button, Container, Typography } from "@mui/material";
 
 export default function Home() {
   return (
@@ -16,10 +17,13 @@ export default function Home() {
           marginTop: "1em",
           borderRadius: "10px",
           display: "flex",
-          alignItems: "end",
-          justifyContent: "center",
+          alignItems: "center",
+          justifyContent: "space-evenly",
+          flexDirection: 'column',
+          padding: '1em'
         }}
       >
+        <Typography sx={{ fontSize: '1.5em'}}>CROSSTIME</Typography>
         <RealTime />
       </Box>
       <Link href={"/timers/configuration"}>
@@ -31,6 +35,7 @@ export default function Home() {
           New clock
         </Button>
       </Link>
+      <UsuallyWorks />
     </Container>
   );
 }
