@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { Box, Button, Typography } from "@mui/material";
-import { buttonDisable, buttonStyle, clockStyle } from "@/app/styles";
+import { btnAlabster, btnBlueGrey, buttonDisable, buttonStyle, clockStyle } from "@/app/styles";
 
 export default function RoundPlusRest() {
   //params
@@ -83,6 +83,14 @@ export default function RoundPlusRest() {
   if (phase === "finished") phaseLabel = "FINISH TIME";
   return (
     <>
+      <Typography
+        sx={{ fontSize: "1.5em", margin: "15px 0px", textAlign: "center" }}
+      >
+        ROUND+REST
+      </Typography>
+      <Typography sx={{ fontSize: "1em", textAlign: "center" }}>
+        ROUND {round}/{rounds}
+      </Typography>
       <Box
         sx={{
           height: "70vh",
@@ -97,9 +105,6 @@ export default function RoundPlusRest() {
             {minutes}:{seconds}
           </Typography>
         </Box>
-        <Typography sx={{ fontSize: "2em" }}>
-          ROUND {round}/{rounds}
-        </Typography>
         <Typography sx={{ fontSize: "1.2em", textTransform: "uppercase" }}>
           {phaseLabel}
         </Typography>
@@ -108,7 +113,7 @@ export default function RoundPlusRest() {
         <Button
           onClick={handleRoundDone}
           disabled={phase !== "work" || !isRunning}
-          sx={!isRunning ? buttonDisable : buttonStyle}
+          sx={!isRunning ? buttonDisable : btnBlueGrey}
           fullWidth
         >
           Round done
@@ -125,7 +130,7 @@ export default function RoundPlusRest() {
 
       <Button
         onClick={handleReset}
-        sx={{ ...buttonStyle, margin: "20px 0px" }}
+        sx={{ ...btnAlabster, margin: "10px 0px" }}
         fullWidth
       >
         Reset

@@ -3,11 +3,16 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { Box, Button, Typography } from "@mui/material";
-import { buttonDisable, buttonStyle, clockStyle } from "@/app/styles";
+import {
+  btnAlabster,
+  buttonDisable,
+  buttonStyle,
+  clockStyle,
+} from "@/app/styles";
 
 export default function Amrap() {
+  // params
   const params = useSearchParams();
-
   const duration = params.get("duration") * 60;
 
   const [time, setTime] = useState(0);
@@ -56,14 +61,17 @@ export default function Amrap() {
           flexDirection: "column",
         }}
       >
+        <Typography sx={{ fontSize: "1.5em", margin: "10px 0px" }}>
+          AMRAP
+        </Typography>
+        <Typography sx={{ fontSize: "1.2em" }}>
+          To {duration / 60}&apos;
+        </Typography>
         <Box sx={clockStyle}>
           <Typography sx={{ fontSize: "5em" }}>
             {minutes}:{seconds}
           </Typography>
         </Box>
-        <Typography sx={{ fontSize: "2em" }}>
-          To {duration / 60}&apos;
-        </Typography>
       </Box>
       <Button
         sx={isRunning ? buttonDisable : buttonStyle}
@@ -75,7 +83,7 @@ export default function Amrap() {
 
       <Button
         onClick={handleReset}
-        sx={{ ...buttonStyle, margin: "20px 0px" }}
+        sx={{ ...btnAlabster, margin: "10px 0px" }}
         fullWidth
       >
         Reset

@@ -3,74 +3,90 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { Box, Button, Typography } from "@mui/material";
-import { buttonDisable, buttonStyle, clockStyle } from "@/app/styles";
+import {
+  btnAlabster,
+  btnBlueGrey,
+  buttonDisable,
+  buttonStyle,
+  clockStyle,
+} from "@/app/styles";
 
 export default function OnePerOne() {
-  const params = useSearchParams();
-  const maxRounds = params.get("rounds");
+// params
+const params = useSearchParams();
+const maxRounds = Number(params.get("rounds") || 0);
 
-  const [phase, setPhase] = useState("idle"); // idle | work | rest | finished
-  const [timeInPhase, setTimeInPhase] = useState(0);
-  const [lastWorkDuration, setLastWorkDuration] = useState(0);
-  const [round, setRound] = useState(1);
-  const [isRunning, setIsRunning] = useState(false);
+const [phase, setPhase] = useState("idle"); // idle | work | rest | finished
+const [timeInPhase, setTimeInPhase] = useState(0);
+const [lastWorkDuration, setLastWorkDuration] = useState(0);
+const [round, setRound] = useState(1);
+const [isRunning, setIsRunning] = useState(false);
 
-  useEffect(() => {
-    if (!isRunning || phase === "idle" || phase === "finished") return;
+useEffect(() => {
+  if (!isRunning || phase === "idle" || phase === "finished") return;
 
-    const interval = setInterval(() => {
-      setTimeInPhase((prev) => prev + 1);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [isRunning, phase]);
-
-  useEffect(() => {
-    if (!isRunning) return;
-    if (phase !== "rest") return;
-    if (lastWorkDuration === 0) return;
-
-    if (timeInPhase >= lastWorkDuration) {
-      if (round >= maxRounds) {
-        setPhase("finished");
-        setIsRunning(false);
-      } else {
-        setRound((r) => r + 1);
-        setTimeInPhase(0);
-        setPhase("work");
+  const interval = setInterval(() => {
+    setTimeInPhase((prev) => {
+      if (phase === "work") {
+        return prev + 1; 
       }
-    }
-  }, [timeInPhase, phase, lastWorkDuration, round, maxRounds, isRunning]);
+      if (phase === "rest") {
+        return prev - 1; 
+      }
+      return prev;
+    });
+  }, 1000);
 
-  const handleStartPause = () => {
-    if (phase === "finished") return;
+  return () => clearInterval(interval);
+}, [isRunning, phase]);
 
-    if (phase === "idle") {
-      setPhase("work"); // iniciar directamente en WORK
+useEffect(() => {
+  if (!isRunning) return;
+  if (phase !== "rest") return;
+
+  if (timeInPhase <= 0) {
+    if (round >= maxRounds) {
+      setPhase("finished");
+      setIsRunning(false);
+    } else {
+      setRound((r) => r + 1);
       setTimeInPhase(0);
+      setPhase("work");
     }
+  }
+}, [timeInPhase, phase, round, maxRounds, isRunning]);
 
-    setIsRunning((prev) => !prev);
-  };
+const handleStartPause = () => {
+  if (phase === "finished") return;
 
-  const handleReset = () => {
-    setIsRunning(false);
-    setPhase("idle");
+  if (phase === "idle") {
+    setPhase("work"); 
     setTimeInPhase(0);
-    setLastWorkDuration(0);
-    setRound(1);
-  };
+  }
 
-  const handleRoundDone = () => {
-    if (phase !== "work") return;
+  setIsRunning((prev) => !prev);
+};
 
-    setLastWorkDuration(timeInPhase);
-    setTimeInPhase(0);
-    setPhase("rest");
-  };
+const handleReset = () => {
+  setIsRunning(false);
+  setPhase("idle");
+  setTimeInPhase(0);
+  setLastWorkDuration(0);
+  setRound(1);
+};
 
-  const minutes = String(Math.floor(timeInPhase / 60)).padStart(2, "0");
-  const seconds = String(timeInPhase % 60).padStart(2, "0");
+const handleRoundDone = () => {
+  if (phase !== "work") return;
+
+  const workDuration = timeInPhase;
+  setLastWorkDuration(workDuration);
+  setTimeInPhase(workDuration);
+  setPhase("rest");
+};
+
+const safeTime = Math.max(timeInPhase, 0);
+const minutes = String(Math.floor(safeTime / 60)).padStart(2, "0");
+const seconds = String(safeTime % 60).padStart(2, "0");
 
   let phaseLabel = "";
   if (phase === "idle") phaseLabel = "START TIMER";
@@ -80,6 +96,14 @@ export default function OnePerOne() {
 
   return (
     <>
+      <Typography
+        sx={{ fontSize: "1.5em", margin: "15px 0px", textAlign: "center" }}
+      >
+        1:1
+      </Typography>
+      <Typography sx={{ fontSize: "1em", textAlign: "center" }}>
+        ROUND {round}/{maxRounds}
+      </Typography>
       <Box
         sx={{
           height: "70vh",
@@ -94,9 +118,6 @@ export default function OnePerOne() {
             {minutes}:{seconds}
           </Typography>
         </Box>
-        <Typography sx={{ fontSize: "2em" }}>
-          ROUND {round}/{maxRounds}
-        </Typography>
         <Typography sx={{ fontSize: "1.2em", textTransform: "uppercase" }}>
           {phaseLabel}
         </Typography>
@@ -105,7 +126,7 @@ export default function OnePerOne() {
         <Button
           onClick={handleRoundDone}
           disabled={phase !== "work" || !isRunning}
-          sx={!isRunning ? buttonDisable : buttonStyle}
+          sx={!isRunning ? buttonDisable : btnBlueGrey}
           fullWidth
         >
           Round done
@@ -122,7 +143,7 @@ export default function OnePerOne() {
 
       <Button
         onClick={handleReset}
-        sx={{ ...buttonStyle, margin: "20px 0px" }}
+        sx={{ ...btnAlabster, margin: "10px 0px" }}
         fullWidth
       >
         Reset

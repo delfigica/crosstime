@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-import { Box, Button, Container, Typography } from "@mui/material";
-import { buttonDisable, buttonStyle, clockStyle } from "../../styles";
+import { Box, Button, Typography } from "@mui/material";
+import { btnAlabster, buttonDisable, buttonStyle, clockStyle } from "../../styles";
 
 export default function Tabata() {
+  // params
   const params = useSearchParams();
   const rounds = params.get("rounds");
   const workSeconds = params.get("active");
@@ -58,7 +59,6 @@ export default function Tabata() {
       setPhase("work");
       setTimeLeft(workSeconds);
     }
-
     setIsRunning((prev) => !prev);
   };
 
@@ -116,7 +116,7 @@ export default function Tabata() {
 
       <Button
         onClick={handleReset}
-        sx={{ ...buttonStyle, margin: "20px 0px" }}
+        sx={{ ...btnAlabster, margin: "10px 0px" }}
         fullWidth
       >
         Reset

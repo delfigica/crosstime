@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { Box, Button, Container, Typography } from "@mui/material";
-import { buttonDisable, buttonStyle, clockStyle } from "@/app/styles";
+import { btnAlabster, buttonDisable, buttonStyle, clockStyle } from "@/app/styles";
 
 export default function Cap() {
   const params = useSearchParams();
@@ -44,7 +44,15 @@ export default function Cap() {
 
   return (
     <>
-      <Box sx={{ height: '70vh', display: 'flex', alignItems: 'center'}}>
+      <Typography
+        sx={{ fontSize: "1.5em", margin: "10px 0px", textAlign: "center" }}
+      >
+        AMRAP
+      </Typography>
+      <Typography sx={{ fontSize: "1.2em", textAlign: "center" }}>
+        To {duration / 60}&apos;
+      </Typography>
+      <Box sx={{ height: "70vh", display: "flex", alignItems: "center" }}>
         <Box sx={clockStyle}>
           <Typography sx={{ fontSize: "5em" }}>
             {minutes}:{seconds}
@@ -61,7 +69,7 @@ export default function Cap() {
 
       <Button
         onClick={handleReset}
-        sx={{ ...buttonStyle, margin: "10px 0px" }}
+        sx={{ ...btnAlabster, margin: "10px 0px" }}
         fullWidth
       >
         Reset

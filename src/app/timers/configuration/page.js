@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { buttonStyle } from "@/app/styles";
+import { btnBlueGrey, buttonStyle } from "@/app/styles";
 
 export default function Configuration() {
   const [modes, setModes] = useState([
@@ -194,8 +194,17 @@ export default function Configuration() {
 
   //STYLES COMPONENTS
   const titleStyle = { fontSize: "1.4em", textTransform: "uppercase" };
-  const btnModes = { color: "#000", margin: "7px", border: "1px solid #000" };
-  const btnModesSelected = { background: "#000", color: "#fff", margin: "7px" };
+  const btnModes = {
+    color: "#0a0b06",
+    margin: "7px",
+    border: "1px solid #0a0b06",
+  };
+  const btnModesSelected = {
+    color: "#daddd3",
+    background: "#0a0b06",
+    margin: "7px",
+    border: "1px solid #0a0b06",
+  };
 
   return (
     <>
@@ -231,7 +240,7 @@ export default function Configuration() {
         </Box>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "end", width: "100%" }}>
-        <Button sx={buttonStyle} onClick={handleSubmit}>
+        <Button sx={{...btnBlueGrey, width: '120px'}}  onClick={handleSubmit}>
           Start
         </Button>
       </Box>

@@ -1,20 +1,20 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { Box, Button, Typography } from "@mui/material";
-import { useSearchParams } from "next/navigation";
-import { buttonDisable, buttonStyle, clockStyle } from "@/app/styles";
+import { btnAlabster, buttonDisable, buttonStyle, clockStyle } from "@/app/styles";
 
 export default function Otm() {
-  const params = useSearchParams();
 
+  // params
+  const params = useSearchParams();
   const min = params.get("min");
   const rounds = params.get("rounds");
 
-  const [roundsLefts, setRoundsLefts] = useState(1);
-
   const totalTime = min * rounds * 60;
-
+  
+  const [roundsLefts, setRoundsLefts] = useState(1);
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [isRunning, setIsRunning] = useState(false);
 
@@ -55,6 +55,7 @@ export default function Otm() {
   const minutes = Math.floor(timeLeft / 60)
     .toString()
     .padStart(2, "0");
+    
   const seconds = (timeLeft % 60).toString().padStart(2, "0");
   return (
     <>
@@ -67,15 +68,17 @@ export default function Otm() {
           flexDirection: "column",
         }}
       >
+        <Typography sx={{ fontSize: '1.5em', margin: '10px 0px'}}>OTM</Typography>
+        <Typography sx={{ fontSize: "1em" }}>
+          ROUND {roundsLefts}/{rounds}{" "}
+        </Typography>
         <Box sx={clockStyle}>
           <Typography sx={{ fontSize: "5em" }}>
             {minutes}:{seconds}
           </Typography>
         </Box>
-        <Typography sx={{ fontSize: "1.5em" }}>
-          ROUND {roundsLefts}/{rounds}{" "}
-        </Typography>
       </Box>
+
       <Button
         sx={isRunning ? buttonDisable : buttonStyle}
         fullWidth
@@ -83,10 +86,9 @@ export default function Otm() {
       >
         {isRunning ? "Stop timer" : "Start Timer"}
       </Button>
-
       <Button
         onClick={handleReset}
-        sx={{ ...buttonStyle, margin: "20px 0px" }}
+        sx={{ ...btnAlabster, margin: "10px 0px" }}
         fullWidth
       >
         Reset

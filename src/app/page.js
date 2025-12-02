@@ -3,7 +3,7 @@ import { RealTime } from "./components/RealTime";
 import { UsuallyWorks } from "./components/UsuallyWorks";
 
 import "./globals.css";
-import { buttonStyle } from "./styles";
+import { btnSmokyBlack } from "./styles";
 import { Box, Button, Container, Typography } from "@mui/material";
 
 export default function Home() {
@@ -30,7 +30,7 @@ export default function Home() {
         <Button
           variant="contained"
           fullWidth
-          sx={{ margin: "10px 0px", ...buttonStyle }}
+          sx={{ margin: "10px 0px", ...btnSmokyBlack }}
         >
           New clock
         </Button>
