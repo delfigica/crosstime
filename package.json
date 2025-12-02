@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "export": "next export",
-    "build:gh": "next build && next export"
+    "build:gh": "next build && next export",
+    "deploy": "npm run build:gh && gh-pages -d out"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -21,6 +22,7 @@
   },
   "devDependencies": {
     "eslint": "^9",
-    "eslint-config-next": "16.0.6"
+    "eslint-config-next": "16.0.6",
+    "gh-pages": "^6.3.0"
   }
 }
