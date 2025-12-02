@@ -10,7 +10,7 @@ export default function Configuration() {
   const [modes, setModes] = useState([
     { id: "01", label: "OTM", values: { min: "", rounds: "" }, route: 'otm' },
     { id: "02", label: "AMRAP", values: { duration: "" }, route: 'amrap' },
-    { id: "03", label: "1:1", values: { duration: "", rounds: "" }, route: 'oneperone' },
+    { id: "03", label: "1:1", values: { rounds: "" }, route: 'oneperone' },
     { id: "04", label: "ROUND+REST", values: { rest: "", rounds: "" }, route: 'roundplusrest' },
     { id: "05", label: "CAP", values: { duration: "" }, route: 'cap' },
     { id: "06", label: "TABATA", values: { rounds: "", active: "", rest: "" }, route: 'tabata' },
@@ -75,15 +75,6 @@ export default function Configuration() {
 
   const onePerOne = (
     <Box>
-      <TextField
-        size="small"
-        label="duration"
-        fullWidth
-        onChange={handleChange}
-        name="duration"
-        value={modes[2].values.duration}
-      />
-      <Typography sx={{ textAlign: "center" }}>or</Typography>
       <TextField
         size="small"
         label="rounds"
