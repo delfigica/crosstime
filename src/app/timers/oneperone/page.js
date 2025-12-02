@@ -12,81 +12,112 @@ import {
 } from "@/app/styles";
 
 export default function OnePerOne() {
-// params
-const params = useSearchParams();
-const maxRounds = Number(params.get("rounds") || 0);
+  // params
+  const params = useSearchParams();
+  const maxRounds = Number(params.get("rounds") || 0);
 
-const [phase, setPhase] = useState("idle"); // idle | work | rest | finished
-const [timeInPhase, setTimeInPhase] = useState(0);
-const [lastWorkDuration, setLastWorkDuration] = useState(0);
-const [round, setRound] = useState(1);
-const [isRunning, setIsRunning] = useState(false);
+  const [phase, setPhase] = useState("idle"); // idle | work | rest | finished
+  const [timeInPhase, setTimeInPhase] = useState(0);
+  const [lastWorkDuration, setLastWorkDuration] = useState(0);
+  const [round, setRound] = useState(1);
+  const [isRunning, setIsRunning] = useState(false);
 
-useEffect(() => {
-  if (!isRunning || phase === "idle" || phase === "finished") return;
+  const [starter, setStarter] = useState(10);
+  const [starterRunning, setStarterRunning] = useState(false);
 
-  const interval = setInterval(() => {
-    setTimeInPhase((prev) => {
-      if (phase === "work") {
-        return prev + 1; 
+  useEffect(() => {
+    if (!starterRunning) return;
+    const interval = setInterval(() => {
+      setStarter((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setStarterRunning(false);
+          setIsRunning(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [starterRunning]);
+
+  useEffect(() => {
+    if (
+      !isRunning ||
+      phase === "idle" ||
+      phase === "finished" ||
+      starterRunning
+    )
+      return;
+
+    const interval = setInterval(() => {
+      setTimeInPhase((prev) => {
+        if (phase === "work") {
+          return prev + 1;
+        }
+        if (phase === "rest") {
+          return prev - 1;
+        }
+        return prev;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isRunning, phase]);
+
+  useEffect(() => {
+    if (!isRunning || starterRunning) return;
+    if (phase !== "rest") return;
+
+    if (timeInPhase <= 0) {
+      if (round >= maxRounds) {
+        setPhase("finished");
+        setIsRunning(false);
+      } else {
+        setRound((r) => r + 1);
+        setTimeInPhase(0);
+        setPhase("work");
       }
-      if (phase === "rest") {
-        return prev - 1; 
-      }
-      return prev;
-    });
-  }, 1000);
-
-  return () => clearInterval(interval);
-}, [isRunning, phase]);
-
-useEffect(() => {
-  if (!isRunning) return;
-  if (phase !== "rest") return;
-
-  if (timeInPhase <= 0) {
-    if (round >= maxRounds) {
-      setPhase("finished");
-      setIsRunning(false);
-    } else {
-      setRound((r) => r + 1);
-      setTimeInPhase(0);
-      setPhase("work");
     }
-  }
-}, [timeInPhase, phase, round, maxRounds, isRunning]);
+  }, [timeInPhase, phase, round, maxRounds, isRunning]);
 
-const handleStartPause = () => {
-  if (phase === "finished") return;
+  const handleStartPause = () => {
+    if (phase === "finished") return;
 
-  if (phase === "idle") {
-    setPhase("work"); 
+    if (phase === "idle") {
+      setPhase("work");
+      setTimeInPhase(0);
+    }
+    if (starterRunning) return;
+    if (starter <= 0) {
+      setIsRunning((prev) => !prev);
+    } else if (starter == 10) {
+      setStarterRunning(true);
+    }
+  };
+
+  const handleReset = () => {
+    setIsRunning(false);
+    setPhase("idle");
     setTimeInPhase(0);
-  }
+    setLastWorkDuration(0);
+    setRound(1);
+    setStarter(10);
+    setStarterRunning(true);
+  };
 
-  setIsRunning((prev) => !prev);
-};
+  const handleRoundDone = () => {
+    if (phase !== "work") return;
 
-const handleReset = () => {
-  setIsRunning(false);
-  setPhase("idle");
-  setTimeInPhase(0);
-  setLastWorkDuration(0);
-  setRound(1);
-};
+    const workDuration = timeInPhase;
+    setLastWorkDuration(workDuration);
+    setTimeInPhase(workDuration);
+    setPhase("rest");
+  };
 
-const handleRoundDone = () => {
-  if (phase !== "work") return;
-
-  const workDuration = timeInPhase;
-  setLastWorkDuration(workDuration);
-  setTimeInPhase(workDuration);
-  setPhase("rest");
-};
-
-const safeTime = Math.max(timeInPhase, 0);
-const minutes = String(Math.floor(safeTime / 60)).padStart(2, "0");
-const seconds = String(safeTime % 60).padStart(2, "0");
+  const safeTime = Math.max(timeInPhase, 0);
+  const minutes = String(Math.floor(safeTime / 60)).padStart(2, "0");
+  const seconds = String(safeTime % 60).padStart(2, "0");
 
   let phaseLabel = "";
   if (phase === "idle") phaseLabel = "START TIMER";
@@ -114,9 +145,13 @@ const seconds = String(safeTime % 60).padStart(2, "0");
         }}
       >
         <Box sx={clockStyle}>
-          <Typography sx={{ fontSize: "5em" }}>
-            {minutes}:{seconds}
-          </Typography>
+          {starterRunning ? (
+            <Typography sx={{ fontSize: "5em" }}>{starter}</Typography>
+          ) : (
+            <Typography sx={{ fontSize: "5em" }}>
+              {minutes}:{seconds}
+            </Typography>
+          )}
         </Box>
         <Typography sx={{ fontSize: "1.2em", textTransform: "uppercase" }}>
           {phaseLabel}

@@ -3,7 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { Box, Button, Typography } from "@mui/material";
-import { btnAlabster, btnBlueGrey, buttonDisable, buttonStyle, clockStyle } from "@/app/styles";
+import {
+  btnAlabster,
+  btnBlueGrey,
+  buttonDisable,
+  buttonStyle,
+  clockStyle,
+} from "@/app/styles";
 
 export default function RoundPlusRest() {
   //params
@@ -15,6 +21,25 @@ export default function RoundPlusRest() {
   const [timeInPhase, setTimeInPhase] = useState(0);
   const [round, setRound] = useState(1);
   const [isRunning, setIsRunning] = useState(false);
+
+  const [starter, setStarter] = useState(10);
+  const [starterRunning, setStarterRunning] = useState(false);
+
+  useEffect(() => {
+    if (!starterRunning) return;
+    const interval = setInterval(() => {
+      setStarter((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setStarterRunning(false);
+          setIsRunning(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [starterRunning]);
 
   useEffect(() => {
     if (!isRunning || phase === "idle" || phase === "finished") return;
@@ -55,8 +80,12 @@ export default function RoundPlusRest() {
       setPhase("work");
       setTimeInPhase(0);
     }
-
-    setIsRunning((prev) => !prev);
+    if (starterRunning) return;
+    if (starter <= 0) {
+      setIsRunning((prev) => !prev);
+    } else if (starter == 10) {
+      setStarterRunning(true);
+    }
   };
 
   const handleReset = () => {
@@ -64,6 +93,8 @@ export default function RoundPlusRest() {
     setPhase("idle");
     setTimeInPhase(0);
     setRound(1);
+    setStarter(10);
+    setStarterRunning(true);
   };
 
   const handleRoundDone = () => {
@@ -101,9 +132,13 @@ export default function RoundPlusRest() {
         }}
       >
         <Box sx={clockStyle}>
-          <Typography sx={{ fontSize: "5em" }}>
-            {minutes}:{seconds}
-          </Typography>
+          {starterRunning ? (
+            <Typography sx={{ fontSize: "5em" }}>{starter}</Typography>
+          ) : (
+            <Typography sx={{ fontSize: "5em" }}>
+              {minutes}:{seconds}
+            </Typography>
+          )}
         </Box>
         <Typography sx={{ fontSize: "1.2em", textTransform: "uppercase" }}>
           {phaseLabel}

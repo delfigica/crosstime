@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { Box, Button, Typography } from "@mui/material";
-import { btnAlabster, buttonDisable, buttonStyle, clockStyle } from "../../styles";
+import {
+  btnAlabster,
+  buttonDisable,
+  buttonStyle,
+  clockStyle,
+} from "../../styles";
 
 export default function Tabata() {
   // params
@@ -17,8 +22,33 @@ export default function Tabata() {
   const [round, setRound] = useState(1);
   const [isRunning, setIsRunning] = useState(false);
 
+  const [starter, setStarter] = useState(10);
+  const [starterRunning, setStarterRunning] = useState(false);
+
   useEffect(() => {
-    if (!isRunning || phase === "idle" || phase === "finished") return;
+    if (!starterRunning) return;
+    const interval = setInterval(() => {
+      setStarter((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setStarterRunning(false);
+          setIsRunning(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [starterRunning]);
+
+  useEffect(() => {
+    if (
+      !isRunning ||
+      phase === "idle" ||
+      phase === "finished" ||
+      starterRunning
+    )
+      return;
 
     const id = setInterval(() => {
       setTimeLeft((prev) => {
@@ -59,7 +89,12 @@ export default function Tabata() {
       setPhase("work");
       setTimeLeft(workSeconds);
     }
-    setIsRunning((prev) => !prev);
+    if (starterRunning) return;
+    if (starter <= 0) {
+      setIsRunning((prev) => !prev);
+    } else if (starter == 10) {
+      setStarterRunning(true);
+    }
   };
 
   const handleReset = () => {
@@ -67,6 +102,8 @@ export default function Tabata() {
     setPhase("idle");
     setRound(1);
     setTimeLeft(workSeconds);
+    setStarter(10);
+    setStarterRunning(true);
   };
 
   const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
@@ -98,9 +135,13 @@ export default function Tabata() {
         }}
       >
         <Box sx={clockStyle}>
-          <Typography sx={{ fontSize: "5em" }}>
-            {minutes}:{seconds}
-          </Typography>
+          {starterRunning ? (
+            <Typography sx={{ fontSize: "5em" }}>{starter}</Typography>
+          ) : (
+            <Typography sx={{ fontSize: "5em" }}>
+              {minutes}:{seconds}
+            </Typography>
+          )}
         </Box>
       </Box>
       <Typography sx={{ textAlign: "center", margin: "10px 0px" }}>

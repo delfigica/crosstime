@@ -18,8 +18,27 @@ export default function Amrap() {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 
+  const [starter, setStarter] = useState(10);
+  const [starterRunning, setStarterRunning] = useState(false);
+
   useEffect(() => {
-    if (!isRunning) return;
+    if (!starterRunning) return;
+    const interval = setInterval(() => {
+      setStarter((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setStarterRunning(false);
+          setIsRunning(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [starterRunning]);
+
+  useEffect(() => {
+    if (!isRunning || starterRunning) return;
 
     const interval = setInterval(() => {
       setTime((prev) => {
@@ -36,12 +55,19 @@ export default function Amrap() {
 
   const handleStartPause = () => {
     if (time >= duration) return;
-    setIsRunning((prev) => !prev);
+    if (starterRunning) return;
+    if (starter <= 0) {
+      setIsRunning((prev) => !prev);
+    } else if (starter == 10) {
+      setStarterRunning(true);
+    }
   };
 
   const handleReset = () => {
     setIsRunning(false);
     setTime(0);
+    setStarter(10);
+    setStarterRunning(true);
   };
 
   const minutes = Math.floor(time / 60)
@@ -68,9 +94,13 @@ export default function Amrap() {
           To {duration / 60}&apos;
         </Typography>
         <Box sx={clockStyle}>
-          <Typography sx={{ fontSize: "5em" }}>
-            {minutes}:{seconds}
-          </Typography>
+          {starterRunning ? (
+            <Typography sx={{ fontSize: "5em" }}>{starter}</Typography>
+          ) : (
+            <Typography sx={{ fontSize: "5em" }}>
+              {minutes}:{seconds}
+            </Typography>
+          )}
         </Box>
       </Box>
       <Button

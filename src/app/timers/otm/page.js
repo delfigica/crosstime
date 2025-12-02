@@ -3,23 +3,46 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { Box, Button, Typography } from "@mui/material";
-import { btnAlabster, buttonDisable, buttonStyle, clockStyle } from "@/app/styles";
+import {
+  btnAlabster,
+  buttonDisable,
+  buttonStyle,
+  clockStyle,
+} from "@/app/styles";
 
 export default function Otm() {
-
   // params
   const params = useSearchParams();
   const min = params.get("min");
   const rounds = params.get("rounds");
 
   const totalTime = min * rounds * 60;
-  
+
   const [roundsLefts, setRoundsLefts] = useState(1);
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [isRunning, setIsRunning] = useState(false);
 
+  const [starter, setStarter] = useState(10);
+  const [starterRunning, setStarterRunning] = useState(false);
+
   useEffect(() => {
-    if (!isRunning) return;
+    if (!starterRunning) return;
+    const interval = setInterval(() => {
+      setStarter((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setStarterRunning(false);
+          setIsRunning(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [starterRunning]);
+
+  useEffect(() => {
+    if (!isRunning || starterRunning) return;
 
     const interval = setInterval(() => {
       setTimeLeft((prev) => {
@@ -35,27 +58,35 @@ export default function Otm() {
   }, [isRunning]);
 
   useEffect(() => {
-    if (!isRunning) return;
+    if (!isRunning || starterRunning) return;
 
     if (timeLeft !== totalTime && timeLeft % (60 * min) === 0) {
       setRoundsLefts((prev) => prev + 1);
     }
-  }, [timeLeft, isRunning, totalTime]);
+  }, [timeLeft, isRunning, totalTime]); 
 
   const handleStartPause = () => {
     if (timeLeft === 0) return;
-    setIsRunning((prev) => !prev);
+    if (starterRunning) return;
+    if(starter <= 0){
+      setIsRunning((prev) => !prev);
+    } else if (starter == 10) {
+      setStarterRunning(true)
+    }
   };
 
   const handleReset = () => {
     setIsRunning(false);
     setTimeLeft(totalTime);
+    setStarter(10);
+    setStarterRunning(true);
+    setRoundsLefts(1);
   };
 
   const minutes = Math.floor(timeLeft / 60)
     .toString()
     .padStart(2, "0");
-    
+
   const seconds = (timeLeft % 60).toString().padStart(2, "0");
   return (
     <>
@@ -68,14 +99,20 @@ export default function Otm() {
           flexDirection: "column",
         }}
       >
-        <Typography sx={{ fontSize: '1.5em', margin: '10px 0px'}}>OTM</Typography>
+        <Typography sx={{ fontSize: "1.5em", margin: "10px 0px" }}>
+          OTM
+        </Typography>
         <Typography sx={{ fontSize: "1em" }}>
-          ROUND {roundsLefts}/{rounds}{" "}
+          ROUND {roundsLefts}/{rounds}
         </Typography>
         <Box sx={clockStyle}>
-          <Typography sx={{ fontSize: "5em" }}>
-            {minutes}:{seconds}
-          </Typography>
+          {starterRunning ? (
+            <Typography sx={{ fontSize: "5em" }}>{starter}</Typography>
+          ) : (
+            <Typography sx={{ fontSize: "5em" }}>
+              {minutes}:{seconds}
+            </Typography>
+          )}
         </Box>
       </Box>
 
