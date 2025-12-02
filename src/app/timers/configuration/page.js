@@ -1,19 +1,43 @@
 "use client";
 import React, { useState } from "react";
-import { buttonStyle } from "../styles";
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { BackHome } from "../components/BackHome";
+
+import { Box, Button, TextField, Typography } from "@mui/material";
+import { buttonStyle } from "@/app/styles";
 
 export default function Configuration() {
   const [modes, setModes] = useState([
-    { id: "01", label: "OTM", values: { min: "", rounds: "" }, route: 'otm' },
-    { id: "02", label: "AMRAP", values: { duration: "" }, route: 'amrap' },
-    { id: "03", label: "1:1", values: { rounds: "" }, route: 'oneperone' },
-    { id: "04", label: "ROUND+REST", values: { rest: "", rounds: "" }, route: 'roundplusrest' },
-    { id: "05", label: "CAP", values: { duration: "" }, route: 'cap' },
-    { id: "06", label: "TABATA", values: { rounds: "", active: "", rest: "" }, route: 'tabata' },
+    {
+      id: "01",
+      label: "OTM",
+      values: { min: "", rounds: "" },
+      route: "timers/otm",
+    },
+    {
+      id: "02",
+      label: "AMRAP",
+      values: { duration: "" },
+      route: "timers/amrap",
+    },
+    {
+      id: "03",
+      label: "1:1",
+      values: { rounds: "" },
+      route: "timers/oneperone",
+    },
+    {
+      id: "04",
+      label: "ROUND+REST",
+      values: { rest: "", rounds: "" },
+      route: "timers/roundplusrest",
+    },
+    { id: "05", label: "CAP", values: { duration: "" }, route: "timers/cap" },
+    {
+      id: "06",
+      label: "TABATA",
+      values: { rounds: "", active: "", rest: "" },
+      route: "timers/tabata",
+    },
   ]);
 
   const [index, setIndex] = useState(0);
@@ -174,8 +198,7 @@ export default function Configuration() {
   const btnModesSelected = { background: "#000", color: "#fff", margin: "7px" };
 
   return (
-    <Container sx={{ marginTop: "10px" }}>
-      <BackHome />
+    <>
       <Box sx={{ margin: "20px 0px" }}>
         <Typography sx={titleStyle}>Select mode</Typography>
         <hr />
@@ -208,8 +231,10 @@ export default function Configuration() {
         </Box>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "end", width: "100%" }}>
-        <Button sx={buttonStyle} onClick={handleSubmit}>Start</Button>
+        <Button sx={buttonStyle} onClick={handleSubmit}>
+          Start
+        </Button>
       </Box>
-    </Container>
+    </>
   );
 }

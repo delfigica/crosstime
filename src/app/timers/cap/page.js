@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Box, Button, Container, Typography } from "@mui/material";
-import { BackHome } from "../components/BackHome";
 import { useSearchParams } from "next/navigation";
-import { buttonDisable, buttonStyle, clockStyle } from "../styles";
+
+import { Box, Button, Container, Typography } from "@mui/material";
+import { buttonDisable, buttonStyle, clockStyle } from "@/app/styles";
 
 export default function Cap() {
   const params = useSearchParams();
@@ -43,8 +43,7 @@ export default function Cap() {
   const seconds = String(timeLeft % 60).padStart(2, "0");
 
   return (
-    <Container sx={{ margin: "10px 0px" }}>
-      <BackHome />
+    <>
       <Box sx={{ height: '70vh', display: 'flex', alignItems: 'center'}}>
         <Box sx={clockStyle}>
           <Typography sx={{ fontSize: "5em" }}>
@@ -67,6 +66,6 @@ export default function Cap() {
       >
         Reset
       </Button>
-    </Container>
+    </>
   );
 }

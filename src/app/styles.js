@@ -1,4 +1,14 @@
 // btns styles
+export const btnSmokyBlack = {
+  backgroundColor: '#0A0B06',
+  color: '#EFF1EF',
+  fontWeight: '600'
+}
+export const btnAlabster = {
+  backgroundColor: '#DADDD3',
+  color: '#0A0B06',
+  fontWeight: '600'
+}
 export const buttonStyle = {
   backgroundColor: "#212121",
   color: "#fff",

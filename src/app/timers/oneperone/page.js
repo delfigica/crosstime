@@ -2,9 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-import { Box, Button, Container, Typography } from "@mui/material";
-import { BackHome } from "../components/BackHome";
-import { buttonDisable, buttonStyle } from "../styles";
+import { Box, Button, Typography } from "@mui/material";
+import { buttonDisable, buttonStyle, clockStyle } from "@/app/styles";
 
 export default function OnePerOne() {
   const params = useSearchParams();
@@ -74,14 +73,13 @@ export default function OnePerOne() {
   const seconds = String(timeInPhase % 60).padStart(2, "0");
 
   let phaseLabel = "";
-  if (phase === "idle") phaseLabel = "START";
-  if (phase === "work") phaseLabel = "WORKING";
-  if (phase === "rest") phaseLabel = "REST";
-  if (phase === "finished") phaseLabel = "FINISHED";
+  if (phase === "idle") phaseLabel = "START TIMER";
+  if (phase === "work") phaseLabel = "WORKING TIME";
+  if (phase === "rest") phaseLabel = "REST TIME";
+  if (phase === "finished") phaseLabel = "FINISH TIME";
 
   return (
-    <Container sx={{ margin: "10px 0px" }}>
-      <BackHome />
+    <>
       <Box
         sx={{
           height: "70vh",
@@ -91,17 +89,19 @@ export default function OnePerOne() {
           flexDirection: "column",
         }}
       >
-        <Typography sx={{ fontSize: "7em" }}>
-          {minutes}:{seconds}
-        </Typography>
+        <Box sx={clockStyle}>
+          <Typography sx={{ fontSize: "5em" }}>
+            {minutes}:{seconds}
+          </Typography>
+        </Box>
         <Typography sx={{ fontSize: "2em" }}>
           ROUND {round}/{maxRounds}
         </Typography>
-        <Typography sx={{ fontSize: "1.2em", textTransform: 'uppercase' }}>
-          {phase} time
+        <Typography sx={{ fontSize: "1.2em", textTransform: "uppercase" }}>
+          {phaseLabel}
         </Typography>
       </Box>
-      <Box sx={{ margin: '10px 0px'}}>
+      <Box sx={{ margin: "10px 0px" }}>
         <Button
           onClick={handleRoundDone}
           disabled={phase !== "work" || !isRunning}
@@ -127,6 +127,6 @@ export default function OnePerOne() {
       >
         Reset
       </Button>
-    </Container>
+    </>
   );
 }

@@ -1,19 +1,18 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { BackHome } from "../components/BackHome";
 
 import { Box, Button, Container, Typography } from "@mui/material";
-import { buttonDisable, buttonStyle, clockStyle } from "../styles";
+import { buttonDisable, buttonStyle, clockStyle } from "../../styles";
 
-export default function RoundPlusRest() {
-  //params
-  const props = useSearchParams();
-  const restSeconds = props.get("rest") * 60;
-  const rounds = props.get("rounds");
+export default function Tabata() {
+  const params = useSearchParams();
+  const rounds = params.get("rounds");
+  const workSeconds = params.get("active");
+  const restSeconds = params.get("rest");
 
   const [phase, setPhase] = useState("idle"); // idle | work | rest | finished
-  const [timeInPhase, setTimeInPhase] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(workSeconds);
   const [round, setRound] = useState(1);
   const [isRunning, setIsRunning] = useState(false);
 
@@ -21,13 +20,12 @@ export default function RoundPlusRest() {
     if (!isRunning || phase === "idle" || phase === "finished") return;
 
     const id = setInterval(() => {
-      setTimeInPhase((prev) => {
-        if (phase === "work") {
-          return prev + 1;
-        } else if (phase === "rest") {
-          return prev - 1;
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(id);
+          return 0;
         }
-        return prev;
+        return prev - 1;
       });
     }, 1000);
 
@@ -35,26 +33,30 @@ export default function RoundPlusRest() {
   }, [isRunning, phase]);
 
   useEffect(() => {
-    if (!isRunning || phase !== "rest") return;
+    if (!isRunning) return;
+    if (timeLeft !== 0) return;
 
-    if (timeInPhase <= 0) {
+    if (phase === "work") {
+      setPhase("rest");
+      setTimeLeft(restSeconds);
+    } else if (phase === "rest") {
       if (round >= rounds) {
         setPhase("finished");
         setIsRunning(false);
       } else {
         setRound((r) => r + 1);
         setPhase("work");
-        setTimeInPhase(0);
+        setTimeLeft(workSeconds);
       }
     }
-  }, [timeInPhase, phase, rounds, round, isRunning]);
+  }, [timeLeft, phase, isRunning, round, rounds, workSeconds, restSeconds]);
 
   const handleStartPause = () => {
     if (phase === "finished") return;
 
     if (phase === "idle") {
       setPhase("work");
-      setTimeInPhase(0);
+      setTimeLeft(workSeconds);
     }
 
     setIsRunning((prev) => !prev);
@@ -63,31 +65,32 @@ export default function RoundPlusRest() {
   const handleReset = () => {
     setIsRunning(false);
     setPhase("idle");
-    setTimeInPhase(0);
     setRound(1);
+    setTimeLeft(workSeconds);
   };
 
-  const handleRoundDone = () => {
-    if (phase !== "work") return;
-
-    setPhase("rest");
-    setTimeInPhase(restSeconds);
-  };
-
-  const minutes = String(Math.floor(timeInPhase / 60)).padStart(2, "0");
-  const seconds = String(Math.max(timeInPhase % 60, 0)).padStart(2, "0");
+  const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+  const seconds = String(timeLeft % 60).padStart(2, "0");
 
   let phaseLabel = "";
   if (phase === "idle") phaseLabel = "START TIMER";
   if (phase === "work") phaseLabel = "WORKING TIME";
   if (phase === "rest") phaseLabel = "REST TIME";
   if (phase === "finished") phaseLabel = "FINISH TIME";
+
   return (
-    <Container sx={{ margin: "10px 0px" }}>
-      <BackHome />
+    <>
+      <Typography
+        sx={{ textAlign: "center", fontSize: "2em", marginTop: "20px" }}
+      >
+        TABATA
+      </Typography>
+      <Typography sx={{ fontSize: "1em", textAlign: "center" }}>
+        ROUND {round}/{rounds}
+      </Typography>
       <Box
         sx={{
-          height: "70vh",
+          height: "60vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -99,24 +102,10 @@ export default function RoundPlusRest() {
             {minutes}:{seconds}
           </Typography>
         </Box>
-        <Typography sx={{ fontSize: "2em" }}>
-          ROUND {round}/{rounds}
-        </Typography>
-        <Typography sx={{ fontSize: "1.2em", textTransform: "uppercase" }}>
-          {phaseLabel}
-        </Typography>
       </Box>
-      <Box sx={{ margin: "10px 0px" }}>
-        <Button
-          onClick={handleRoundDone}
-          disabled={phase !== "work" || !isRunning}
-          sx={!isRunning ? buttonDisable : buttonStyle}
-          fullWidth
-        >
-          Round done
-        </Button>
-      </Box>
-
+      <Typography sx={{ textAlign: "center", margin: "10px 0px" }}>
+        {phaseLabel}
+      </Typography>
       <Button
         sx={isRunning ? buttonDisable : buttonStyle}
         fullWidth
@@ -132,6 +121,6 @@ export default function RoundPlusRest() {
       >
         Reset
       </Button>
-    </Container>
+    </>
   );
 }

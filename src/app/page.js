@@ -6,25 +6,30 @@ import { buttonStyle } from "./styles";
 import Link from "next/link";
 
 export default function Home() {
-  
   return (
     <Container>
       <Box
         sx={{
-          backgroundColor: "#e0e0e0",
+          backgroundColor: "#DADDD3",
           width: "100%",
           height: "30vh",
           marginTop: "1em",
           borderRadius: "10px",
-          display: 'flex',
-          alignItems: 'end',
-          justifyContent: 'center',
+          display: "flex",
+          alignItems: "end",
+          justifyContent: "center",
         }}
       >
         <RealTime />
       </Box>
-      <Link href={'/configuration'}>
-      <Button variant="contained" fullWidth sx={{margin: '10px 0px', ...buttonStyle}}>New clock</Button>
+      <Link href={"/timers/configuration"}>
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{ margin: "10px 0px", ...buttonStyle }}
+        >
+          New clock
+        </Button>
       </Link>
     </Container>
   );
