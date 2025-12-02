@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏋️‍♀️ CrossFit Timer App  
+A collection of functional training timers built with **Next.js** and **Material UI**, designed to support the most common timer formats used in CrossFit and functional fitness: **CAP**, **OTM**, **1:1**, **Round + Rest**, **AMRAP**, and **TABATA**.
 
-## Getting Started
+Each timer includes its own logic and customizable parameters, offering a smooth and accurate training experience.
 
-First, run the development server:
+---
+
+## 🚀 Technologies Used
+
+- **Next.js 14 (App Router)**
+- **React Hooks (useState, useEffect)**
+- **Material UI (MUI)** for UI components and styling
+- **URL Search Params** for dynamic configurations
+- **Custom timer logic** for each workout format
+
+---
+
+## ⏱️ Available Timers
+
+### 🟥 **CAP Timer**
+Countdown from a predefined duration.  
+Perfect for “**For Time**” workouts.
+
+**Features:**
+- Optional 10-second starter
+- Clear countdown display
+- Start / Pause / Reset controls
+
+---
+
+### 🟦 **OTM (On The Minute) Timer**
+Executes a task every minute for a set number of rounds.
+
+**Features:**
+- Fully configurable minute duration
+- Automatic round progression
+- Countdown logic per round
+
+---
+
+### 🟧 **1:1 Timer**
+Tracks work time and assigns **equal rest time** automatically.
+
+**Flow:**
+- WORK → athlete performs the round  
+- REST → countdown based on the time spent working  
+- Repeats until all rounds are complete  
+
+---
+
+### 🟩 **Round + Rest Timer**
+Each round consists of:
+- A fixed **work duration**
+- A fixed **rest duration**
+
+Both phases are countdown-based.
+
+---
+
+### 🟨 **AMRAP (As Many Rounds As Possible)**
+A timer that counts up until a defined time cap.
+
+**Features:**
+- Built-in 10-second starter
+- Ascending timer display
+- Buttons to start, pause, and reset
+
+---
+
+### 🟪 **TABATA Timer**
+A classic structure with:
+- Fixed number of rounds
+- Work duration
+- Rest duration
+
+**Features:**
+- Automatic transitions between work/rest
+- Countdown timers for both phases
+- Round tracking
+
+---
+
+## 🧠 App Flow
+
+1. The user inputs:
+   - duration  
+   - rounds  
+   - work time  
+   - rest time  
+   - workout mode
+
+2. The configuration is passed via URL query parameters.
+
+3. Each timer page (`/cap`, `/otm`, `/amrap`, etc.) implements its own internal logic.
+
+4. Many timers include:
+   - a 10-second starter  
+   - automatic round counting  
+   - ascending or descending modes  
+   - button locks while the starter runs  
+
+## ✨ Future Improvements
+
+- Sound and vibration alerts (3–2–1)
+- Global dark mode
+- Save custom workout presets
+- Circular or bar progress indicators
+
+## 🧪 Scripts
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+npm run build
+npm start
