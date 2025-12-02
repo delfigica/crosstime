@@ -60,14 +60,6 @@ export default function Otm() {
     .toString()
     .padStart(2, "0");
   const seconds = (timeLeft % 60).toString().padStart(2, "0");
-
-  const parseTime = (time) => {
-    if (time < 10) {
-      return "0" + time;
-    } else if (time >= 10) {
-      return time;
-    }
-  };
   return (
     <Container sx={{ marginTop: "10px" }}>
       <Link href={"/"}>
