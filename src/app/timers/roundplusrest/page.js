@@ -3,7 +3,7 @@ import { RoundPlusRest } from "./RoundPlusRest";
 
 export default function RoundPlusRestPage() {
   return (
-    <Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
       <RoundPlusRest />
     </Suspense>
   );

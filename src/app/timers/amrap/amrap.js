@@ -8,10 +8,14 @@ import {
   buttonDisable,
   buttonStyle,
   clockStyle,
+  counterTitle,
+  timeSubtitle,
+  timeText,
 } from "@/app/styles";
+import { BackHome } from "@/app/components/BackHome";
 
 export const Amrap = () => {
- // params
+  // params
   const params = useSearchParams();
   const duration = params.get("duration") * 60;
 
@@ -77,47 +81,64 @@ export const Amrap = () => {
   const seconds = (time % 60).toString().padStart(2, "0");
 
   return (
-    <>
       <Box
         sx={{
-          height: "70vh",
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column",
+          justifyContent: "space-between",
+          padding: "2em",
+          height: "100vh",
         }}
       >
-        <Typography sx={{ fontSize: "1.5em", margin: "10px 0px" }}>
-          AMRAP
-        </Typography>
-        <Typography sx={{ fontSize: "1.2em" }}>
-          To {duration / 60}&apos;
-        </Typography>
-        <Box sx={clockStyle}>
-          {starterRunning ? (
-            <Typography sx={{ fontSize: "5em" }}>{starter}</Typography>
-          ) : (
-            <Typography sx={{ fontSize: "5em" }}>
-              {minutes}:{seconds}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box>
+            <Typography sx={timeText}>{duration / 60}&apos;</Typography>
+            <Typography sx={timeSubtitle}>TO</Typography>
+          </Box>
+          <Box>
+            <Typography sx={timeText}>{minutes}</Typography>
+            <Typography sx={timeSubtitle}>M</Typography>
+          </Box>
+          <Box>
+            <Typography sx={timeText}>
+              {starterRunning ? starter : seconds}
             </Typography>
-          )}
+            <Typography sx={timeSubtitle}>S</Typography>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            alignItems: "end",
+          }}
+        >
+          <Typography sx={counterTitle}>AMRAP</Typography>
+          <Box sx={{ width: "80%" }}>
+            <Button
+              sx={isRunning ? buttonDisable : buttonStyle}
+              fullWidth
+              onClick={handleStartPause}
+            >
+              {isRunning ? "Stop timer" : "Start Timer"}
+            </Button>
+
+            <Button
+              onClick={handleReset}
+              sx={{ ...btnAlabster, margin: "10px 0px" }}
+              fullWidth
+            >
+              Reset
+            </Button>
+            <BackHome />
+          </Box>
         </Box>
       </Box>
-      <Button
-        sx={isRunning ? buttonDisable : buttonStyle}
-        fullWidth
-        onClick={handleStartPause}
-      >
-        {isRunning ? "Stop timer" : "Start Timer"}
-      </Button>
-
-      <Button
-        onClick={handleReset}
-        sx={{ ...btnAlabster, margin: "10px 0px" }}
-        fullWidth
-      >
-        Reset
-      </Button>
-    </>
   );
-}
+};

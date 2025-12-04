@@ -3,7 +3,7 @@ import { Configuration } from "./configuration";
 
 export default function ConfigurationPage() {
   return (
-    <Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
       <Configuration />
     </Suspense>
   );

@@ -8,7 +8,11 @@ import {
   buttonDisable,
   buttonStyle,
   clockStyle,
+  counterTitle,
+  timeSubtitle,
+  timeText,
 } from "@/app/styles";
+import { BackHome } from "@/app/components/BackHome";
 export const Otm = () => {
   // params
   const params = useSearchParams();
@@ -88,47 +92,66 @@ export const Otm = () => {
 
   const seconds = (timeLeft % 60).toString().padStart(2, "0");
   return (
-    <>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "2em",
+        height: "100vh",
+      }}
+    >
       <Box
         sx={{
-          height: "70vh",
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           flexDirection: "column",
+          justifyContent: "space-between",
         }}
       >
-        <Typography sx={{ fontSize: "1.5em", margin: "10px 0px" }}>
-          OTM
-        </Typography>
-        <Typography sx={{ fontSize: "1em" }}>
-          ROUND {roundsLefts}/{rounds}
-        </Typography>
-        <Box sx={clockStyle}>
-          {starterRunning ? (
-            <Typography sx={{ fontSize: "5em" }}>{starter}</Typography>
-          ) : (
-            <Typography sx={{ fontSize: "5em" }}>
-              {minutes}:{seconds}
-            </Typography>
-          )}
+        <Box>
+          <Typography sx={timeText}>
+            {roundsLefts}/{rounds}
+          </Typography>
+          <Typography sx={timeSubtitle}>ROUNDS</Typography>
+        </Box>
+        <Box>
+          <Typography sx={timeText}>{minutes}</Typography>
+          <Typography sx={timeSubtitle}>M</Typography>
+        </Box>
+        <Box>
+          <Typography sx={timeText}>
+            {starterRunning ? starter : seconds}
+          </Typography>
+          <Typography sx={timeSubtitle}>S</Typography>
         </Box>
       </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          alignItems: "end",
+        }}
+      >
+        <Typography sx={counterTitle}>OTM</Typography>
+        <Box sx={{ width: "80%" }}>
+          <Button
+            sx={isRunning ? buttonDisable : buttonStyle}
+            fullWidth
+            onClick={handleStartPause}
+          >
+            {isRunning ? "Stop timer" : "Start Timer"}
+          </Button>
 
-      <Button
-        sx={isRunning ? buttonDisable : buttonStyle}
-        fullWidth
-        onClick={handleStartPause}
-      >
-        {isRunning ? "Stop timer" : "Start Timer"}
-      </Button>
-      <Button
-        onClick={handleReset}
-        sx={{ ...btnAlabster, margin: "10px 0px" }}
-        fullWidth
-      >
-        Reset
-      </Button>
-    </>
+          <Button
+            onClick={handleReset}
+            sx={{ ...btnAlabster, margin: "10px 0px" }}
+            fullWidth
+          >
+            Reset
+          </Button>
+          <BackHome />
+        </Box>
+      </Box>
+    </Box>
   );
 };

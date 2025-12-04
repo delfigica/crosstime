@@ -3,7 +3,7 @@ import { Otm } from "./Otm";
 
 export default function OtmPage() {
   return (
-    <Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
       <Otm />
     </Suspense>
   );

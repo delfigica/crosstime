@@ -8,7 +8,11 @@ import {
   buttonDisable,
   buttonStyle,
   clockStyle,
+  counterTitle,
+  timeSubtitle,
+  timeText,
 } from "@/app/styles";
+import { BackHome } from "@/app/components/BackHome";
 
 export const Cap = () => {
   // params
@@ -75,41 +79,64 @@ export const Cap = () => {
   const seconds = String(timeLeft % 60).padStart(2, "0");
 
   return (
-    <>
-      <Typography
-        sx={{ fontSize: "1.5em", margin: "10px 0px", textAlign: "center" }}
-      >
-        CAP
-      </Typography>
-      <Typography sx={{ fontSize: "1.2em", textAlign: "center" }}>
-        FROM {duration / 60}&apos;
-      </Typography>
-      <Box sx={{ height: "70vh", display: "flex", alignItems: "center" }}>
-        <Box sx={clockStyle}>
-          {starterRunning ? (
-            <Typography sx={{ fontSize: "5em" }}>{starter}</Typography>
-          ) : (
-            <Typography sx={{ fontSize: "5em" }}>
-              {minutes}:{seconds}
-            </Typography>
-          )}
-        </Box>
-      </Box>
-      <Button
-        sx={isRunning ? buttonDisable : buttonStyle}
-        fullWidth
-        onClick={handleStartPause}
-      >
-        {isRunning ? "Stop timer" : "Start Timer"}
-      </Button>
-
-      <Button
-        onClick={handleReset}
-        sx={{ ...btnAlabster, margin: "10px 0px" }}
-        fullWidth
-      >
-        Reset
-      </Button>
-    </>
-  )
+    <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "2em",
+              height: "100vh",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box>
+                <Typography sx={timeText}>{duration / 60}&apos;</Typography>
+                <Typography sx={timeSubtitle}>TO</Typography>
+              </Box>
+              <Box>
+                <Typography sx={timeText}>{minutes}</Typography>
+                <Typography sx={timeSubtitle}>M</Typography>
+              </Box>
+              <Box>
+                <Typography sx={timeText}>
+                  {starterRunning ? starter : seconds}
+                </Typography>
+                <Typography sx={timeSubtitle}>S</Typography>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                alignItems: "end",
+              }}
+            >
+              <Typography sx={counterTitle}>CAP</Typography>
+              <Box sx={{ width: "80%" }}>
+                <Button
+                  sx={isRunning ? buttonDisable : buttonStyle}
+                  fullWidth
+                  onClick={handleStartPause}
+                >
+                  {isRunning ? "Stop timer" : "Start Timer"}
+                </Button>
+    
+                <Button
+                  onClick={handleReset}
+                  sx={{ ...btnAlabster, margin: "10px 0px" }}
+                  fullWidth
+                >
+                  Reset
+                </Button>
+                <BackHome />
+              </Box>
+            </Box>
+          </Box>
+  );
 };

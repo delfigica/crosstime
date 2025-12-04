@@ -26,7 +26,7 @@ export default function Home() {
         <Typography sx={{ fontSize: '1.5em'}}>CROSSTIME</Typography>
         <RealTime />
       </Box>
-      <Link href={"/timers/configuration"}>
+      <Link href={"/configuration"}>
         <Button
           variant="contained"
           fullWidth

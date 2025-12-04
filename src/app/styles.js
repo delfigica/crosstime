@@ -1,14 +1,14 @@
 // btns styles
 export const btnSmokyBlack = {
-  backgroundColor: '#0A0B06',
-  color: '#EFF1EF',
-  fontWeight: '600'
-}
+  backgroundColor: "#0A0B06",
+  color: "#EFF1EF",
+  fontWeight: "600",
+};
 export const btnAlabster = {
-  backgroundColor: '#DADDD3',
-  color: '#0A0B06',
-  fontWeight: '600'
-}
+  backgroundColor: "#DADDD3",
+  color: "#0A0B06",
+  fontWeight: "600",
+};
 export const buttonStyle = {
   backgroundColor: "#212121",
   color: "#fff",
@@ -36,4 +36,25 @@ export const clockStyle = {
   alignItems: "center",
   justifyContent: "center",
   margin: "auto",
+};
+
+// text design
+
+export const timeText = {
+  fontSize: "5em",
+  borderBottom: "2px solid #DADDD3",
+  width: "30%",
+  textAlign: "center",
+  lineHeight: 1,
+};
+
+export const timeSubtitle = {
+  fontSize: "0.9em",
+  margin: "5px 0px",
+  color: "#DADDD3",
+};
+
+export const counterTitle = {
+  fontSize: "5em",
+  writingMode: "vertical-rl",
 };

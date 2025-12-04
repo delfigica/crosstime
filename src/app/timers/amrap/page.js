@@ -3,7 +3,7 @@ import { Amrap } from "./amrap";
 
 export default function AmrapPage() {
   return (
-    <Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
       <Amrap />
     </Suspense>
   );

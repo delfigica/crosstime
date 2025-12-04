@@ -2,11 +2,12 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Box, Button, TextField, Typography } from "@mui/material";
 import { btnBlueGrey } from "@/app/styles";
+import { Box, Button, TextField, Typography } from "@mui/material";
+import { BackHome } from "../components/BackHome";
 
 export const Configuration = () => {
- const [modes, setModes] = useState([
+  const [modes, setModes] = useState([
     {
       id: "01",
       label: "OTM",
@@ -68,7 +69,9 @@ export const Configuration = () => {
       <TextField
         size="small"
         label="Time round"
-        sx={{ margin: "0px 10px" }}
+        sx={{
+          margin: "0px 10px",
+        }}
         name="min"
         value={modes[0].values.min}
         onChange={handleChange}
@@ -195,23 +198,27 @@ export const Configuration = () => {
   //STYLES COMPONENTS
   const titleStyle = { fontSize: "1.4em", textTransform: "uppercase" };
   const btnModes = {
+    backgroundColor: "#daddd3",
     color: "#0a0b06",
     margin: "7px",
-    border: "1px solid #0a0b06",
+    border: "1px solid #daddd3",
   };
   const btnModesSelected = {
     color: "#daddd3",
-    background: "#0a0b06",
+    background: "#889681",
     margin: "7px",
-    border: "1px solid #0a0b06",
+    border: "1px solid #889681",
   };
 
   return (
     <>
-      <Box sx={{ margin: "20px 0px" }}>
+      <Box sx={{ margin: '10px'}}>
+        <BackHome />
+      </Box>
+      <Box sx={{ margin: "0px 0px", padding: "2em" }}>
         <Typography sx={titleStyle}>Select mode</Typography>
         <hr />
-        <Box>
+        <Box sx={{ margin: "10px 0" }}>
           {modes.map((mode, i) => (
             <Button
               key={mode.id}
@@ -240,10 +247,10 @@ export const Configuration = () => {
         </Box>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "end", width: "100%" }}>
-        <Button sx={{...btnBlueGrey, width: '120px'}}  onClick={handleSubmit}>
+        <Button sx={{ ...btnBlueGrey, width: "120px" }} onClick={handleSubmit}>
           Start
         </Button>
       </Box>
     </>
   );
-}
+};

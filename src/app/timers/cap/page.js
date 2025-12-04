@@ -4,7 +4,7 @@ import { Cap } from "./cap";
 
 
 export default function CapPage() {
-  return (<Suspense>
+  return (<Suspense fallback={<div>Loading...</div>}>
     <Cap />
   </Suspense>)
 }

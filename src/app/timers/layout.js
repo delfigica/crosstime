@@ -1,12 +1,11 @@
 import React from "react";
 import { BackHome } from "../components/BackHome";
 
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 export default function TimersLayout({ children }) {
   return (
-      <Container sx={{ margin: "10px 0px" }}>
-        <BackHome />
-        {children}
-      </Container>
+    <Box sx={{ height: "100vh", backgroundColor: "#0a0b06", color: "#DADDD3" }}>
+      {children}
+    </Box>
   );
 }
