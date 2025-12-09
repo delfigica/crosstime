@@ -34,12 +34,12 @@ export const UsuallyWorks = () => {
   };
   return (
     <Box>
-      <hr />
       <Typography
         sx={{
-          fontSize: "1.2em",
+          fontSize: "1.5em",
           textTransform: "uppercase",
-          margin: "5px 0px",
+          margin: "15px 0px 5px 0px",
+          textAlign: "center",
         }}
       >
         Usually Works
@@ -50,6 +50,7 @@ export const UsuallyWorks = () => {
           alignItems: "center",
           flexWrap: "wrap",
           justifyContent: "space-evenly",
+          paddingBottom: "20px ",
         }}
       >
         {works.map((work, i) => (
@@ -58,7 +59,7 @@ export const UsuallyWorks = () => {
             sx={{
               width: "46%",
               height: "120px",
-              backgroundColor: "#889681",
+              backgroundColor: "#1F1F1F",
               color: "#EFF1EF",
               borderRadius: "5px",
               margin: "5px",
@@ -66,6 +67,7 @@ export const UsuallyWorks = () => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
+              border: "1px solid rgba(218, 221, 211, 0.18)",
             }}
             onClick={() => {
               goToWork(work.route);

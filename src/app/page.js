@@ -3,39 +3,64 @@ import { RealTime } from "./components/RealTime";
 import { UsuallyWorks } from "./components/UsuallyWorks";
 
 import "./globals.css";
-import { btnSmokyBlack } from "./styles";
+import { btnSmokyBlack, counterTitle } from "./styles";
 import { Box, Button, Container, Typography } from "@mui/material";
+
+const boxHome = {
+  backgroundColor: "#1F1F1F",
+  width: "180px",
+  padding: ".5em",
+  borderRadius: "10px",
+  height: "210px",
+  border: "1px solid rgba(218, 221, 211, 0.18)",
+};
+
+const btnNewClock = {
+  backgroundColor: "#1F1F1F",
+  border: "1px solid rgba(218, 221, 211, 0.18)",
+};
 
 export default function Home() {
   return (
-    <Container>
-      <Box
-        sx={{
-          backgroundColor: "#DADDD3",
-          width: "100%",
-          height: "30vh",
-          marginTop: "1em",
-          borderRadius: "10px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-evenly",
-          flexDirection: 'column',
-          padding: '1em'
-        }}
+      <Container
+      sx={{ minHeight: "100vh", backgroundColor: "#0a0b06", color: "#DADDD3" }}
       >
-        <Typography sx={{ fontSize: '1.5em'}}>CROSSTIME</Typography>
-        <RealTime />
+      <Box sx={{ padding: "1.5/*  */em" }}>
+        <Typography
+          sx={{ fontSize: "2em", color: "#DADDD3", textAlign: "center" }}
+        >
+          CROSSTIME
+        </Typography>
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box
+          sx={{
+            ...boxHome,
+            display: "flex",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <RealTime />
+          <Typography sx={{ ...counterTitle, fontSize: "1.5em" }}>
+            TIME
+          </Typography>
+        </Box>
+        <Box sx={{ ...boxHome }}>
+          <Typography sx={{ fontSize: "1.5em", textAlign: "center" }}>
+            LAST TIMER
+          </Typography>
+        </Box>
       </Box>
       <Link href={"/configuration"}>
         <Button
           variant="contained"
           fullWidth
-          sx={{ margin: "10px 0px", ...btnSmokyBlack }}
+          sx={{ margin: "15px 0px", ...btnNewClock }}
         >
           New clock
         </Button>
       </Link>
-      <UsuallyWorks />
+          <UsuallyWorks />
     </Container>
   );
 }

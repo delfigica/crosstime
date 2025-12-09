@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
+import { timeSubtitle, timeText } from "../styles";
 
 export const RealTime = () => {
   const [now, setNow] = useState(new Date());
@@ -23,10 +24,24 @@ export const RealTime = () => {
 
   return (
     <Box>
-      <Typography sx={{ fontSize: "4em" }}>
-        {parseTime(now.getHours())}:{parseTime(now.getMinutes())}:
-        {parseTime(now.getSeconds())}
-      </Typography>
+      <Box>
+        <Typography sx={{ ...timeText, fontSize: '2em' }}>
+          {parseTime(now.getHours())}
+        </Typography>
+        <Typography sx={{ ...timeSubtitle }}>H</Typography>
+      </Box>
+      <Box>
+        <Typography sx={{ ...timeText, fontSize: '2em' }}>
+          {parseTime(now.getMinutes())}
+        </Typography>
+        <Typography sx={{ ...timeSubtitle }}>M</Typography>
+      </Box>
+      <Box>
+        <Typography sx={{ ...timeText, fontSize: '2em' }}>
+          {parseTime(now.getSeconds())}
+        </Typography>
+        <Typography sx={{ ...timeSubtitle }}>S</Typography>
+      </Box>
     </Box>
   );
 };
