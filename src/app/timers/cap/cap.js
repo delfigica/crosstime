@@ -7,7 +7,6 @@ import {
   btnAlabster,
   buttonDisable,
   buttonStyle,
-  clockStyle,
   counterTitle,
   timeSubtitle,
   timeText,
