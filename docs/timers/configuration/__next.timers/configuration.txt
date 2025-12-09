@@ -1,4 +1,0 @@
-1:"$Sreact.fragment"
-2:I[9902,["/crosstime/_next/static/chunks/8e6d3eb92593ee57.js","/crosstime/_next/static/chunks/d26199c62096235d.js"],"default"]
-3:I[53907,["/crosstime/_next/static/chunks/8e6d3eb92593ee57.js","/crosstime/_next/static/chunks/d26199c62096235d.js"],"default"]
-0:{"buildId":"drQ06e-uOSVeX_OnlYarF","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
