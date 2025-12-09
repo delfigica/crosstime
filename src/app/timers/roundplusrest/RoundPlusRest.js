@@ -8,8 +8,11 @@ import {
   btnBlueGrey,
   buttonDisable,
   buttonStyle,
-  clockStyle,
+  counterTitle,
+  timeSubtitle,
+  timeText,
 } from "@/app/styles";
+import { BackHome } from "@/app/components/BackHome";
 export const RoundPlusRest = () => {
   //params
   const props = useSearchParams();
@@ -112,63 +115,83 @@ export const RoundPlusRest = () => {
   if (phase === "rest") phaseLabel = "REST TIME";
   if (phase === "finished") phaseLabel = "FINISH TIME";
   return (
-    <>
-      <Typography
-        sx={{ fontSize: "1.5em", margin: "15px 0px", textAlign: "center" }}
-      >
-        ROUND+REST
-      </Typography>
-      <Typography sx={{ fontSize: "1em", textAlign: "center" }}>
-        ROUND {round}/{rounds}
-      </Typography>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "2em",
+        minHeight: "100vh",
+      }}
+    >
       <Box
         sx={{
-          height: "70vh",
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           flexDirection: "column",
+          justifyContent: "space-between",
         }}
       >
-        <Box sx={clockStyle}>
-          {starterRunning ? (
-            <Typography sx={{ fontSize: "5em" }}>{starter}</Typography>
-          ) : (
-            <Typography sx={{ fontSize: "5em" }}>
-              {minutes}:{seconds}
-            </Typography>
-          )}
+        <Box>
+          <Typography sx={timeText}>
+            {round}/{rounds}
+          </Typography>
+          <Typography sx={timeSubtitle}>ROUNDS</Typography>
         </Box>
-        <Typography sx={{ fontSize: "1.2em", textTransform: "uppercase" }}>
-          {phaseLabel}
-        </Typography>
+        <Box>
+          <Typography sx={timeText}>{minutes}</Typography>
+          <Typography sx={timeSubtitle}>M</Typography>
+        </Box>
+        <Box>
+          <Typography sx={timeText}>
+            {starterRunning ? starter : seconds}
+          </Typography>
+          <Typography sx={timeSubtitle}>S</Typography>
+        </Box>
       </Box>
-      <Box sx={{ margin: "10px 0px" }}>
-        <Button
-          onClick={handleRoundDone}
-          disabled={phase !== "work" || !isRunning}
-          sx={!isRunning ? buttonDisable : btnBlueGrey}
-          fullWidth
-        >
-          Round done
-        </Button>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          alignItems: "end",
+        }}
+      >
+        <Box sx={{ display: "flex", flexDirection: "row-reverse" }}>
+          <Typography sx={counterTitle}>ROUND+</Typography>
+          <Typography sx={{ ...counterTitle, margin: "0 -40px 0px 0px" }}>
+            REST
+          </Typography>
+        </Box>
+        <Box sx={{ width: "80%" }}>
+          <Button
+            onClick={handleRoundDone}
+            disabled={phase !== "work" || !isRunning}
+            sx={
+              !isRunning
+                ? { ...buttonDisable, margin: "10px 0px" }
+                :{ ...btnBlueGrey, margin: '10px 0px'}
+            }
+            fullWidth
+          >
+            Round done
+          </Button>
+          <Button
+            sx={isRunning ? buttonDisable : buttonStyle}
+            fullWidth
+            onClick={handleStartPause}
+          >
+            {isRunning ? "Stop timer" : "Start Timer"}
+          </Button>
+
+          <Button
+            onClick={handleReset}
+            sx={{ ...btnAlabster, margin: "10px 0px" }}
+            fullWidth
+          >
+            Reset
+          </Button>
+          <BackHome />
+        </Box>
       </Box>
-
-      <Button
-        sx={isRunning ? buttonDisable : buttonStyle}
-        fullWidth
-        onClick={handleStartPause}
-      >
-        {isRunning ? "Stop timer" : "Start Timer"}
-      </Button>
-
-      <Button
-        onClick={handleReset}
-        sx={{ ...btnAlabster, margin: "10px 0px" }}
-        fullWidth
-      >
-        Reset
-      </Button>
-    </>
+    </Box>
   );
-}
+};
