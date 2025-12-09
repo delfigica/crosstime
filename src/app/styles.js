@@ -1,6 +1,7 @@
 // btns styles
 export const btnSmokyBlack = {
-  backgroundColor: "#0A0B06",
+  backgroundColor: "#1F1F1F",
+  border: "1px solid rgba(218, 221, 211, 0.18)",
   color: "#EFF1EF",
   fontWeight: "600",
 };

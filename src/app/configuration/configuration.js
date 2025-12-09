@@ -1,11 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useLastTimer } from "../useLastTimer";
+import { BackHome } from "../components/BackHome";
 
 import { btnBlueGrey } from "@/app/styles";
-import { Box, Button, TextField, Typography } from "@mui/material";
-import { BackHome } from "../components/BackHome";
-import { useLastTimer } from "../useLastTimer";
+import {
+  Box,
+  Button,
+  Typography,
+} from "@mui/material";
 
 export const Configuration = () => {
   const [modes, setModes] = useState([
@@ -64,36 +68,45 @@ export const Configuration = () => {
     );
   };
 
+  const textFieldStyle = {
+    color: "#DADDD3",
+    border: "1px solid #daddd3",
+    borderRadius: "25px",
+    textTransform: "uppercase",
+    fontSize: "0.7em",
+    width: "100%",
+    backgroundColor: "transparent",
+    padding: "1em",
+  };
+
   //MODES
   const OTM = (
     <Box sx={{ display: "flex" }}>
-      <TextField
-        size="small"
-        label="Time round"
-        sx={{
+      <input
+        placeholder="Time round"
+        style={{
           margin: "0px 10px",
+          ...textFieldStyle,
         }}
         name="min"
         value={modes[0].values.min}
         onChange={handleChange}
       />
-      <TextField
-        size="small"
-        label="Rounds"
-        sx={{ margin: "0px 10px" }}
+      <input
+        placeholder="Rounds"
+        style={{ margin: "0px 10px", ...textFieldStyle }}
         name="rounds"
-        onChange={handleChange}
         value={modes[0].values.rounds}
+        onChange={handleChange}
       />
     </Box>
   );
 
   const AMRAP = (
     <Box>
-      <TextField
-        size="small"
-        label="duration"
-        fullWidth
+      <input
+        placeholder="duration"
+        style={textFieldStyle}
         onChange={handleChange}
         value={modes[1].values.duration}
         name="duration"
@@ -103,10 +116,9 @@ export const Configuration = () => {
 
   const onePerOne = (
     <Box>
-      <TextField
-        size="small"
-        label="rounds"
-        fullWidth
+      <input
+        placeholder="rounds"
+        style={textFieldStyle}
         onChange={handleChange}
         name="rounds"
         value={modes[2].values.rounds}
@@ -116,18 +128,16 @@ export const Configuration = () => {
 
   const roundPlusRest = (
     <Box sx={{ display: "flex" }}>
-      <TextField
-        size="small"
-        label="rest time (min)"
-        sx={{ margin: "0px 10px" }}
+      <input
+        placeholder="rest time (min)"
+        style={{ margin: "0px 10px", ...textFieldStyle }}
         name="rest"
         value={modes[3].values.rest}
         onChange={handleChange}
       />
-      <TextField
-        size="small"
-        label="rounds"
-        sx={{ margin: "0px 10px" }}
+      <input
+        placeholder="rounds"
+        style={{ margin: "0px 10px", ...textFieldStyle }}
         name="rounds"
         value={modes[3].values.rounds}
         onChange={handleChange}
@@ -137,10 +147,9 @@ export const Configuration = () => {
 
   const CAP = (
     <Box>
-      <TextField
-        size="small"
-        label="duration"
-        fullWidth
+      <input
+        placeholder="duration"
+        style={textFieldStyle }
         name="duration"
         value={modes[4].values.duration}
         onChange={handleChange}
@@ -150,29 +159,23 @@ export const Configuration = () => {
 
   const TABATA = (
     <Box>
-      <TextField
-        size="small"
-        label="rounds"
-        fullWidth
-        sx={{ margin: "5px 0px" }}
+      <input
+        placeholder="rounds"
+        style={{ margin: "5px 0px", ...textFieldStyle }}
         name="rounds"
         value={modes[5].values.rounds}
         onChange={handleChange}
       />
-      <TextField
-        size="small"
-        label="active (seg)"
-        fullWidth
-        sx={{ margin: "5px 0px" }}
+      <input
+        placeholder="active (seg)"
+        style={{ margin: "5px 0px", ...textFieldStyle }}
         name="active"
         value={modes[5].values.active}
         onChange={handleChange}
       />
-      <TextField
-        size="small"
-        label="rest (seg)"
-        fullWidth
-        sx={{ margin: "5px 0px" }}
+      <input
+        placeholder="rest (seg)"
+        style={{ margin: "5px 0px", ...textFieldStyle }}
         name="rest"
         value={modes[5].values.rest}
         onChange={handleChange}
@@ -187,7 +190,7 @@ export const Configuration = () => {
 
     const currentValues = modes[index].values;
     const params = new URLSearchParams();
-    const values = []
+    const values = [];
     Object.entries(currentValues).forEach(([key, value]) => {
       if (value !== "") {
         params.append(key, value);
@@ -206,20 +209,27 @@ export const Configuration = () => {
   //STYLES COMPONENTS
   const titleStyle = { fontSize: "1.4em", textTransform: "uppercase" };
   const btnModes = {
-    backgroundColor: "#daddd3",
-    color: "#0a0b06",
+    backgroundColor: "#1F1F1F",
+    color: "#DADDD3",
     margin: "7px",
-    border: "1px solid #daddd3",
+    border: "1px solid rgba(218, 221, 211, 0.18)",
   };
   const btnModesSelected = {
-    color: "#daddd3",
-    background: "#889681",
+    color: "#000",
+    background: "#daddd3",
     margin: "7px",
-    border: "1px solid #889681",
+    border: "1px solid rgba(218, 221, 211, 0.18)",
   };
 
   return (
-    <>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        backgroundColor: "#0a0b06",
+        color: "#DADDD3",
+        padding: "1em",
+      }}
+    >
       <Box sx={{ margin: "10px" }}>
         <BackHome />
       </Box>
@@ -259,6 +269,6 @@ export const Configuration = () => {
           Start
         </Button>
       </Box>
-    </>
+    </Box>
   );
 };
