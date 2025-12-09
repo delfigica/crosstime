@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { btnBlueGrey } from "@/app/styles";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { BackHome } from "../components/BackHome";
+import { useLastTimer } from "../useLastTimer";
 
 export const Configuration = () => {
   const [modes, setModes] = useState([
@@ -180,18 +181,25 @@ export const Configuration = () => {
   );
 
   const router = useRouter();
-
+  const { saveLastTimer } = useLastTimer();
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const currentValues = modes[index].values;
     const params = new URLSearchParams();
-
+    const values = []
     Object.entries(currentValues).forEach(([key, value]) => {
       if (value !== "") {
         params.append(key, value);
+        values.push(`${key}: ${value}`);
       }
     });
+    const lastTimerItem = {
+      name: modes[index].label,
+      values: values,
+      route: `/${modes[index].route}?${params.toString()}`,
+    };
+    saveLastTimer(lastTimerItem);
     router.push(`/${modes[index].route}?${params.toString()}`);
   };
 
@@ -212,7 +220,7 @@ export const Configuration = () => {
 
   return (
     <>
-      <Box sx={{ margin: '10px'}}>
+      <Box sx={{ margin: "10px" }}>
         <BackHome />
       </Box>
       <Box sx={{ margin: "0px 0px", padding: "2em" }}>
