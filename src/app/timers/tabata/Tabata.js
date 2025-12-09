@@ -8,9 +8,13 @@ import {
   buttonDisable,
   buttonStyle,
   clockStyle,
+  counterTitle,
+  timeSubtitle,
+  timeText,
 } from "../../styles";
+import { BackHome } from "@/app/components/BackHome";
 export const Tabata = () => {
- // params
+  // params
   const params = useSearchParams();
   const rounds = params.get("rounds");
   const workSeconds = params.get("active");
@@ -115,52 +119,71 @@ export const Tabata = () => {
   if (phase === "finished") phaseLabel = "FINISH TIME";
 
   return (
-    <>
-      <Typography
-        sx={{ textAlign: "center", fontSize: "2em", marginTop: "20px" }}
-      >
-        TABATA
-      </Typography>
-      <Typography sx={{ fontSize: "1em", textAlign: "center" }}>
-        ROUND {round}/{rounds}
-      </Typography>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "2em",
+        height: "100vh",
+      }}
+    >
       <Box
         sx={{
-          height: "60vh",
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           flexDirection: "column",
+          justifyContent: "space-between",
         }}
       >
-        <Box sx={clockStyle}>
-          {starterRunning ? (
-            <Typography sx={{ fontSize: "5em" }}>{starter}</Typography>
-          ) : (
-            <Typography sx={{ fontSize: "5em" }}>
-              {minutes}:{seconds}
-            </Typography>
-          )}
+        <Box>
+          <Typography sx={timeText}>
+            {round}/{rounds}
+          </Typography>
+          <Typography sx={timeSubtitle}>ROUNDS</Typography>
+        </Box>
+        <Box>
+          <Typography sx={timeText}>{minutes}</Typography>
+          <Typography sx={timeSubtitle}>M</Typography>
+        </Box>
+        <Box>
+          <Typography sx={timeText}>
+            {starterRunning ? starter : seconds}
+          </Typography>
+          <Typography sx={timeSubtitle}>S</Typography>
         </Box>
       </Box>
-      <Typography sx={{ textAlign: "center", margin: "10px 0px" }}>
-        {phaseLabel}
-      </Typography>
-      <Button
-        sx={isRunning ? buttonDisable : buttonStyle}
-        fullWidth
-        onClick={handleStartPause}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          alignItems: "end",
+        }}
       >
-        {isRunning ? "Stop timer" : "Start Timer"}
-      </Button>
+        <Box sx={{ display: "flex", flexDirection: "row-reverse" }}>
+          <Typography sx={counterTitle}>TABATA</Typography>
+          <Typography sx={{ ...counterTitle, fontSize: "1.5em", margin: 'auto -20px' }}>
+            {phaseLabel}
+          </Typography>
+        </Box>
+        <Box sx={{ width: "80%" }}>
+          <Button
+            sx={isRunning ? buttonDisable : buttonStyle}
+            fullWidth
+            onClick={handleStartPause}
+          >
+            {isRunning ? "Stop timer" : "Start Timer"}
+          </Button>
 
-      <Button
-        onClick={handleReset}
-        sx={{ ...btnAlabster, margin: "10px 0px" }}
-        fullWidth
-      >
-        Reset
-      </Button>
-    </>
+          <Button
+            onClick={handleReset}
+            sx={{ ...btnAlabster, margin: "10px 0px" }}
+            fullWidth
+          >
+            Reset
+          </Button>
+          <BackHome />
+        </Box>
+      </Box>
+    </Box>
   );
-}
+};
