@@ -8,6 +8,13 @@ const nextConfig = {
 
   basePath: isProd ? "/crosstime" : "",
   assetPrefix: isProd ? "/crosstime/" : "",
+
+  experimental: {
+    webpackBuildWorker: false,
+  },
+  webpack(config) {
+    return config;
+  },
 };
 
 export default nextConfig;
