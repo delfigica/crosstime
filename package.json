@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "lint": "eslint",
+    "start": "next start",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "export": "next export",
-    "build:gh": "next build && next export",
-    "deploy": "npm run build:gh && gh-pages -d out"
+    "export": "next export -o docs",
+    "build:gh": "npm run build && npm run export",
+    "deploy": "npm run build:gh && gh-pages -d docs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

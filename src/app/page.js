@@ -12,11 +12,12 @@ import { useEffect } from "react";
 
 const boxHome = {
   backgroundColor: "#1F1F1F",
-  width: "180px",
+  width: "100%",
   padding: ".5em",
   borderRadius: "10px",
   height: "210px",
   border: "1px solid rgba(218, 221, 211, 0.18)",
+  margin: '0px 5px'
 };
 
 const btnNewClock = {
