@@ -1,7 +1,12 @@
 self.__BUILD_MANIFEST = {
   "__rewrites": {
     "afterFiles": [],
-    "beforeFiles": [],
+    "beforeFiles": [
+      {
+        "source": "/crosstime//_next/:path+",
+        "destination": "/crosstime/_next/:path+"
+      }
+    ],
     "fallback": []
   },
   "sortedPages": [

@@ -8,8 +8,7 @@
     "dev": "next dev",
     "build": "next build",
     "export": "next export -o docs",
-    "build:gh": "npm run build && npm run export",
-    "deploy": "npm run build:gh && gh-pages -d docs"
+    "build:gh": "npm run build && npm run export"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
